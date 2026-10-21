@@ -1,0 +1,51 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "roman-pipeline"
+version = "0.2.0"
+description = "AI-driven novel production pipeline with canon verification"
+readme = "README.md"
+license = {text = "MIT"}
+authors = [
+    {name = "LazyTitan0074", email = "github@lazytitan.dev"}
+]
+requires-python = ">=3.11"
+dependencies = [
+    "python-dotenv>=1.0",
+    "typer>=0.12",
+    "requests>=2.31",
+    "google-genai>=1.0",
+    "Pillow>=10.0",
+    "pydantic>=2.0",
+    "pydantic-settings>=2.0",
+    "markdown-it-py>=3.0",
+    "rich>=13.0",
+]
+optional-dependencies = {
+    dev = [
+        "pytest>=8.0",
+        "pytest-mock>=3.12",
+        "pytest-cov>=4.0",
+    ]
+}
+
+[project.scripts]
+roman-pipeline = "scripts.cli:app"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["scripts*"]
+exclude = ["tests*", "templates*", "example*", "test_*", "final_*", "final_check", "projects", "workspace", "templates"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = "-v --tb=short -p no:cacheprovider"
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"

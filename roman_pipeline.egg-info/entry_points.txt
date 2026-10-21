@@ -1,0 +1,2 @@
+[console_scripts]
+roman-pipeline = scripts.cli:app

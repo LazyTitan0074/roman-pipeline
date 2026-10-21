@@ -1,0 +1,43 @@
+{
+  "characters": [
+    {
+      "name": "Yuna Blaire",
+      "age": "23",
+      "physical_description": "5'11\", athletic, chiseled six-pack, dark hair, sharp features. Dresses in expensive silk shirts. Imposing presence.",
+      "personality_traits": "Arrogant, predatory, charming on surface. Underneath: exhausted, desperately craving structure and someone stronger than her. Becomes a bratty, then helpless Little through forced regression.",
+      "background": "Mafia heiress, daughter of the Boss. Raised to be a predator. Campus legend — collects women, owns every room. Never been told no until Lara.",
+      "motivations": "Wants to be the apex predator. Actually wants to stop choosing, stop performing, stop being strong.",
+      "relationships": {
+        "Lara": "Roommate 1 year → Fixer revealed → Mommy/Domme. The only person who ever broke her.",
+        "The Mother": "Mother, Mafia Boss. Distant, cold. Yuna craved her approval; now watches her submit to Lara."
+      },
+      "arc": "Arrogant predator (ch1) → angry brat (ch2-3) → broken rebel (ch5) → helpless Little (ch7-10)"
+    },
+    {
+      "name": "Lara",
+      "age": "27",
+      "physical_description": "Tall, commanding presence. Dark hair pulled back severely, iron ring on right hand. Wears tailored suits. Moves with lethal economy.",
+      "personality_traits": "Clinical, cold, maternal in a terrifying way. Absolute authority. A 'Fixer' who believes discipline is proof of care. Does not tolerate defiance. Never angry — only precise.",
+      "background": "Hired by the Mother 6 years ago as Yuna's shadow/protector/Fixer. Became roommate to monitor. Secretly the Mother's lover. Has killed for this family.",
+      "motivations": "Protect Yuna (Mother's orders → personal obsession). Break her completely so she never has to be strong again. Own her absolutely.",
+      "relationships": {
+        "Yuna": "Charge → prisoner → daughter/Little. The only softness in Lara's life.",
+        "The Mother": "Lover, employer, equal. The only person Lara answers to."
+      },
+      "arc": "Hidden Fixer (ch1) → revealed Domme (ch1-2) → clinical trainer (ch3-6) → lethal protector (ch8) → devoted Mommy (ch9-10)"
+    },
+    {
+      "name": "The Mother (Mafia Boss)",
+      "age": "50s",
+      "physical_description": "Elegant, terrifying, cold. Grey-streaked dark hair coiled tight. Pale eyes. Rose-and-darker perfume. Immaculate designer suits.",
+      "personality_traits": "Calculating, emotionally detached. Loves her daughter in her own twisted way — wants her safe, controlled, out of the way. Lara's lover. Power incarnate.",
+      "background": "Built the empire. Hired Lara to fix Yuna. Sees regression as the optimal outcome — a pliable heiress who causes no trouble.",
+      "motivations": "Secure the succession. Keep Yuna alive and manageable. Maintain her empire and her lover.",
+      "relationships": {
+        "Yuna": "Daughter, investment, disappointment-turned-asset.",
+        "Lara": "Lover, most trusted weapon, the only person who sees her human."
+      },
+      "arc": "Distant Boss (ch1-6) → visiting approver (ch7) → satisfied architect (ch10)"
+    }
+  ]
+}

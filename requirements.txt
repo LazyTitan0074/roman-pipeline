@@ -1,5 +1,19 @@
+# Core
 python-dotenv>=1.0
 typer>=0.12
 requests>=2.31
 google-genai>=1.0
 Pillow>=10.0
+pydantic>=2.0
+pydantic-settings>=2.0
+
+# CLI enhancements
+rich>=13.0
+
+# Optional: better markdown parsing for EPUB
+markdown-it-py>=3.0
+
+# Dev / testing
+pytest>=8.0
+pytest-mock>=3.12
+pytest-cov>=4.0

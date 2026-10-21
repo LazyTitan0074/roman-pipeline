@@ -1,0 +1,21 @@
+version: 1
+project:
+  project_name: golden_cage
+  title: "The Golden Cage"
+  category: Fiction
+  genre: Dark Romance / MDLG / Psychological Thriller
+  language: English
+  description: "Yuna, a 23-year-old mafia princess and campus predator, is forced into a strict MDLG dynamic by Lara, her roommate and a 'Fixer' hired by her mother. The story tracks Yuna's psychological regression from an untouchable top to a helpless, cherished Little."
+  num_characters: "3"
+  worldbuilding_needed: false
+  review_preference: AI
+  book_length: Novel
+  tone: Dark, Clinical, Intense
+  target_audience: Adults
+  num_chapters: "10"
+  llm_provider: openrouter
+  model: nvidia/nemotron-3-ultra-550b-a55b:free
+  fallback_chain:
+    - openrouter/nvidia/nemotron-3-ultra-550b-a55b:free
+    - google_ai_studio/gemini-2.5-flash
+    - mistral/ministral-8b-latest

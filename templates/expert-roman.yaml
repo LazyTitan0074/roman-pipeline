@@ -1,0 +1,36 @@
+version: 1
+project:
+  project_name: "{{PROJECT_NAME}}"
+  title: "{{TITLE}}"
+  category: Fiction
+  genre: "{{GENRE}}"
+  language: "{{LANGUAGE}}"
+  description: "{{DESCRIPTION}}"
+  num_characters: "{{NUM_CHARACTERS}}"
+  worldbuilding_needed: true
+  review_preference: AI
+  book_length: Novel
+  tone: "{{TONE}}"
+  target_audience: Adults
+  num_chapters: "{{NUM_CHAPTERS}}"
+  inspired_by: "{{INSPIRED_BY}}"
+  llm_provider: "{{WRITER_PROVIDER}}"
+  model: "{{WRITER_MODEL}}"
+  fallback_chain:
+    - "{{WRITER_FALLBACK_CHAIN}}"
+  agent_fallback_chains:
+    chapter_writer:
+      - "{{WRITER_MODEL}}"
+      - "{{WRITER_FALLBACK_CHAIN}}"
+    editor:
+      - "mistral/ministral-8b-latest"
+      - "google_ai_studio/gemini-2.5-flash"
+  workflow:
+    concept_approval: auto
+    outline_review: auto
+    character_generation: auto
+    worldbuilding_generation: auto
+    chapter_writing: auto
+    chapter_error_mode: continue
+    formatting: auto
+    output_format: markdown

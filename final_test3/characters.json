@@ -1,0 +1,48 @@
+{
+  "characters": [
+    {
+      "name": "Protagonist",
+      "age": "20",
+      "role": "protagonist",
+      "description": "Main character description.",
+      "personality": "{{PROTAGONIST_PERSONALITY}}",
+      "background": "{{PROTAGONIST_BACKGROUND}}",
+      "motivations": "{{PROTAGONIST_MOTIVATIONS}}",
+      "relations": {},
+      "arc": "{{PROTAGONIST_ARC}}"
+    },
+    {
+      "name": "{{OTHER_POV_NAME}}",
+      "age": "{{OTHER_POV_AGE}}",
+      "role": "deuteragonist",
+      "description": "{{OTHER_POV_DESCRIPTION}}",
+      "personality": "{{OTHER_POV_PERSONALITY}}",
+      "background": "{{OTHER_POV_BACKGROUND}}",
+      "motivations": "{{OTHER_POV_MOTIVATIONS}}",
+      "relations": {},
+      "arc": "{{OTHER_POV_ARC}}"
+    },
+    {
+      "name": "Antagonist",
+      "age": "40",
+      "role": "antagonist",
+      "description": "{{ANTAGONIST_DESCRIPTION}}",
+      "personality": "{{ANTAGONIST_PERSONALITY}}",
+      "background": "{{ANTAGONIST_BACKGROUND}}",
+      "motivations": "{{ANTAGONIST_MOTIVATIONS}}",
+      "relations": {},
+      "arc": "{{ANTAGONIST_ARC}}"
+    },
+    {
+      "name": "{{SECONDARY_NAME}}",
+      "age": "14",
+      "role": "supporting",
+      "description": "Supporting character description.",
+      "personality": "{{SECONDARY_PERSONALITY}}",
+      "background": "{{SECONDARY_BACKGROUND}}",
+      "motivations": "{{SECONDARY_MOTIVATIONS}}",
+      "relations": {},
+      "arc": "{{SECONDARY_ARC}}"
+    }
+  ]
+}

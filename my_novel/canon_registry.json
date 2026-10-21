@@ -1,0 +1,9 @@
+{
+  "chapters": {
+    "1": {
+      "status": "pass",
+      "reviewer": "gemini-2.5-flash-lite",
+      "violations": 0
+    }
+  }
+}

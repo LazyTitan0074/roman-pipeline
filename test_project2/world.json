@@ -1,0 +1,40 @@
+{
+  "worldbuilding": {
+    "geography": {
+      "setting": "{{SETTING_NAME}}",
+      "locations": [],
+      "map_notes": ""
+    },
+    "culture": {
+      "societies": [],
+      "customs": [],
+      "languages": []
+    },
+    "history": {
+      "timeline": [],
+      "major_events": [],
+      "legends": []
+    },
+    "rules": {
+      "magic_system": "",
+      "technology_level": "",
+      "laws": [],
+      "economy": ""
+    },
+    "organizations": {
+      "factions": [],
+      "institutions": [],
+      "religions": []
+    },
+    "economy": {
+      "currency": "",
+      "trade": "",
+      "resources": []
+    },
+    "religion": {
+      "deities": [],
+      "practices": [],
+      "holy_sites": []
+    }
+  }
+}

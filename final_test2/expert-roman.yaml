@@ -1,0 +1,36 @@
+version: 1
+project:
+  project_name: "final_test2"
+  title: "Final Test 2"
+  category: Fiction
+  genre: "Fantasy"
+  language: "English"
+  description: "A fantasy novel about Final Test 2."
+  num_characters: "6"
+  worldbuilding_needed: true
+  review_preference: AI
+  book_length: Novel
+  tone: "Serious"
+  target_audience: Adults
+  num_chapters: "10"
+  inspired_by: ""
+  llm_provider: "openrouter"
+  model: "nvidia/nemotron-3-ultra-550b-a55b:free"
+  fallback_chain:
+    - "google_ai_studio/gemini-2.5-flash, mistral/ministral-8b-latest, mistral/ministral-3b-latest"
+  agent_fallback_chains:
+    chapter_writer:
+      - "nvidia/nemotron-3-ultra-550b-a55b:free"
+      - "google_ai_studio/gemini-2.5-flash, mistral/ministral-8b-latest, mistral/ministral-3b-latest"
+    editor:
+      - "mistral/ministral-8b-latest"
+      - "google_ai_studio/gemini-2.5-flash"
+  workflow:
+    concept_approval: auto
+    outline_review: auto
+    character_generation: auto
+    worldbuilding_generation: auto
+    chapter_writing: auto
+    chapter_error_mode: continue
+    formatting: auto
+    output_format: markdown

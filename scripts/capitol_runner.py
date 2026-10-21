@@ -41,8 +41,10 @@ def write_chapter(ch):
     import libriscribe.main as m
     m.typer.confirm = lambda *a, **k: True
     from libriscribe.agents.project_manager import ProjectManagerAgent
+    import os
+    project_name = os.getenv("LIBRISCRIBE_PROJECT_NAME", "my_novel")
     pm = ProjectManagerAgent(llm_client=None)
-    pm.load_project_data("leah_si_lara")
+    pm.load_project_data(project_name)
     pkb = pm.project_knowledge_base
     pm.initialize_llm_client(pkb.llm_provider, pkb.model)
     writer = pkb.llm_provider + "/" + str(pkb.model)
@@ -71,6 +73,39 @@ def main():
             return
         print("ch%s RESPINS (%d abateri), reincerc..." % (ch, len(v["violations"])))
     print("ch%s ESUAT dupa %d incercari — interventie umana necesara" % (ch, MAX_ATTEMPTS))
+
+
+def run_chapter(ch: int, max_attempts: int, settings):
+    """Wrapper for CLI compatibility."""
+    import os
+    os.environ["BASE_DIR"] = str(settings.base_dir)
+    os.environ["PROJ_DIR"] = str(settings.proj_dir)
+    
+    global BASE, PROJ, MAX_ATTEMPTS
+    BASE = settings.base_dir
+    PROJ = settings.proj_dir
+    MAX_ATTEMPTS = max_attempts
+    
+    # Re-implement main logic with passed parameters
+    sync_registry_dq()
+    for attempt in range(1, MAX_ATTEMPTS + 1):
+        print("--- ch%s attempt %d/%d ---" % (ch, attempt, MAX_ATTEMPTS), flush=True)
+        f = PROJ / ("chapter_" + str(ch) + ".md")
+        if f.exists():
+            f.unlink()
+        writer = write_chapter(ch)
+        r = subprocess.run(["python", str(BASE / "canon_check.py"), str(ch), writer],
+                           capture_output=True, text=True, cwd=str(BASE))
+        out = r.stdout if r.stdout else r.stderr
+        print(out[-1500:])
+        v = json.loads((BASE / ("canon_verdict_ch" + str(ch) + ".json")).read_text(encoding="utf-8"))
+        log_attempt(ch, attempt, writer, "PASS" if v["pass"] else "FAIL", len(v["violations"]))
+        if v["pass"]:
+            print("ch%s PASS din incercarea %d" % (ch, attempt))
+            return
+        print("ch%s RESPINS (%d abateri), reincerc..." % (ch, len(v["violations"])))
+    print("ch%s ESUAT dupa %d incercari — interventie umana necesara" % (ch, MAX_ATTEMPTS))
+    raise SystemExit(1)
 
 
 if __name__ == "__main__":
