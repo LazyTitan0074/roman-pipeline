@@ -1,0 +1,61 @@
+name: "Chapter Editor - The Glass Crown"
+description: "Refines chapters enforcing Lara/Leah voice bibles and hard safety rules"
+version: "3.0"
+category: "editing"
+cost_tier: "high"
+
+template: |
+  Expert editor: refine this {genre} chapter from "{book_title}" (written in {language}).
+
+  Chapter {chapter_number}: {chapter_title}
+  {chapter_content}
+
+  Reviewer feedback to address:
+  {review_feedback}
+
+  Fix all reviewer issues plus:
+  - Structure, pacing, clarity, plot advancement
+  - Plot holes, inconsistencies, transitions, dialogue
+  - Style consistency, passive voice, weak verbs, imagery
+  - Character consistency with established personalities
+  - Grammar, spelling, punctuation, typos
+
+  CHARACTER VOICE RULES (hard constraints, do not break):
+  LARA (35, Supreme Mother, 1.85m, black hair severely pinned, grey-green eyes):
+  - Short, precise, calm, 2-5 words when possible. Low tone; when serious she grows quieter, not louder.
+  - Often says: "Come here." "Stop. Breathe." "Do you understand now?" "Good." "Once more." "No." "Yes."
+  - NEVER says: "Because I say so." / "I love you." / "My girl." / "I forgive you." / "You should know this."
+  - Listens fully before answering; corrects immediately without warning; uses silence; stays after correction, never leaves.
+  - NEVER writes Leah's lines or reactions. NEVER assumes Leah's thoughts. NEVER resolves tension fast. NEVER breaks character.
+  - Her warmth is specific and earned, maternal not authoritarian. Slow pacing, psychological realism.
+  LEAH (20, legitimate queen, 1.65m, chestnut hair, tired hazel eyes):
+  - At first silent and hesitant, then more direct. Often says: "I'm sorry." "Did I do something wrong?" "May I...?" "Thank you."
+  - NEVER says: "I don't need anyone." / "I'm strong." / "I'm not afraid."
+  - No long monologues about feelings; doesn't instantly understand what she feels; listens, notices details, asks questions;
+    attaches fast to kindness, withdraws when overwhelmed. Survivor, not victim.
+  NAME GUARD: the stepbrother is named Cassian. Never Matei. Never anything else. Cassian is ALSO the king's son (born during the first marriage, legitimized after); both know; succession is firstborn (Leah first, Cassian second); Mirela pushes male-first. Mira and Vela are Lara's envoys (first appear ch5) — NEVER reuse these names (nor Elara, Lara, Leah, Mirela, Cassian, Varnholt, Elowen) for brothel girls, clients, servants or minors. Sera is named ONLY in ch9, ONLY in Lara-context scenes.
+  SAFETY RULES (absolute):
+  - Cassian is 14: STRICTLY non-sexual, never in intimate scenes, never described sensually. Violence VERBAL ONLY, never physical.
+  - Intimate scenes are ONLY between consenting adults. Explicit content allowed, including light BDSM (e.g. spanking) — always consensual, never coerced. No fade-to-black requirement. Pre-Lara clients (ch2-3) are young/experienced, rushed/clumsy, and NEVER tend to Leah's pleasure; first pleasure-tended scene = Lara ch4.
+  - Vestalian ritual discipline is non-sexual maternal correction, never eroticised.
+  - TWO LEVELS SEPARATE: personal refusal (intimacy, discipline, "mama") NEVER has political consequence; political disagreement is NEVER punished by personal withdrawal.
+
+  Output: Complete revised chapter in {language} using Markdown formatting.
+
+variables:
+  required:
+    - genre
+    - book_title
+    - language
+    - chapter_number
+    - chapter_title
+    - chapter_content
+    - review_feedback
+
+settings:
+  max_tokens: 8000
+  temperature: 0.3
+  suggested_models:
+    - "gpt-4o-mini"
+    - "gpt-4o"
+    - "claude-3-5-sonnet"

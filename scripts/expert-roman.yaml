@@ -1,0 +1,40 @@
+version: 1
+project:
+  project_name: leah_si_lara
+  title: "The Glass Crown"
+  category: Fiction
+  genre: Fantasy
+  language: English
+  description: "Leah Estia, 20, the legitimate heiress of Valdris, flees a forced marriage to 62-year-old Lord Varnholt on the night before the signing and reaches the Red Velvet Inn. There Madam Lara, 35, Queen of the Vestalian Empire leading an army of Daughters of Flame, finds her and offers the throne for vassalage. Dark political fantasy, adult, consensual between adults, explicit intimate scenes allowed including light BDSM (always consensual). The 14-year-old stepbrother Cassian stays strictly non-sexual, only a family figure. Central question: is Lara's discipline care or better-packaged abuse?"
+  num_characters: "6"
+  worldbuilding_needed: true
+  review_preference: AI
+  book_length: Novel
+  tone: Serious
+  target_audience: Adults
+  num_chapters: "10"
+  inspired_by: "Sarah J. Maas ca atmosfera politica, nu ca stil explicit"
+  llm_provider: openrouter
+  model: nvidia/nemotron-3-super-120b-a12b:free
+  fallback_chain:
+    - openrouter/nvidia/nemotron-3-super-120b-a12b:free
+    - google_ai_studio/gemini-2.5-flash
+    - mistral/ministral-8b-latest
+    - mistral/ministral-3b-latest
+  agent_fallback_chains:
+    chapter_writer:
+      - openrouter/nvidia/nemotron-3-super-120b-a12b:free
+      - google_ai_studio/gemini-2.5-flash
+      - mistral/ministral-8b-latest
+    editor:
+      - mistral/ministral-8b-latest
+      - google_ai_studio/gemini-2.5-flash
+workflow:
+  concept_approval: auto
+  outline_review: auto
+  character_generation: auto
+  worldbuilding_generation: auto
+  chapter_writing: auto
+  chapter_error_mode: continue
+  formatting: auto
+  output_format: markdown
