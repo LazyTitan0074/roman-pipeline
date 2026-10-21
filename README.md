@@ -32,7 +32,10 @@ roman-pipeline/
 └── README.md
 ```
 
-## What the agent needs from you (input files)
+## Example output
+
+See `example/` for a real `canon_verdict_ch1.json` produced by the pipeline
+and the resulting chapter excerpt.
 
 For a new project, fill in / provide:
 
@@ -49,15 +52,26 @@ For a new project, fill in / provide:
 | `templates/editor.yml` | Editor template (voice rules, name guard, safety rules). |
 | `templates/.env.example` | API keys (OpenRouter, Google AI Studio, Mistral, Groq/Bedrock). Copy to `.env`. |
 
+## Quick start
+
+```bash
+git clone https://github.com/LazyTitan0074/roman-pipeline.git
+cd roman-pipeline
+pip install -r requirements.txt
+cp templates/.env.example .env   # fill in your API keys
+# edit BASE_DIR / PROJ_DIR in scripts/capitol_runner.py (or set env vars)
+python scripts/capitol_runner.py 1
+```
+
 ## Main scripts
 
-- `capitol_runner.py <N>` — run production of one chapter (sync + write + check + retry).
-- `canon_check.py <N> [writer_model]` — verify a chapter against `CANON.md`.
-- `build_manuscript.py`, `format_oficial.py` — assemble + format.
-- `build_all.py`, `build_final.py`, `assemble_repo.py` — aggregate builds.
-- `sync_all.py`, `sync_chars.py` — syncs.
-- `verify_build.py`, `verify_struct.py`, `verify_epub.py`, `verify_review.py` — verifications.
-- `make_epub.py`, `make_cover.py` — EPUB + cover.
+- `scripts/capitol_runner.py <N>` — run production of one chapter (sync + write + check + retry).
+- `scripts/canon_check.py <N> [writer_model]` — verify a chapter against `CANON.md`.
+- `scripts/build_manuscript.py`, `scripts/format_oficial.py` — assemble + format.
+- `scripts/build_all.py`, `scripts/build_final.py`, `scripts/assemble_repo.py` — aggregate builds.
+- `scripts/sync_all.py`, `scripts/sync_chars.py` — syncs.
+- `scripts/verify_build.py`, `scripts/verify_struct.py`, `scripts/verify_epub.py`, `scripts/verify_review.py` — verifications.
+- `scripts/make_epub.py`, `scripts/make_cover.py` — EPUB + cover.
 
 ## Configuration
 

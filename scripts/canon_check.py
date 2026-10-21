@@ -12,8 +12,9 @@ from pathlib import Path
 
 from dotenv import load_dotenv
 
-BASE = Path(r"C:\Users\bizoi\libriscribe-roman")
-PROJ = Path(r"C:\Users\bizoi\AppData\Roaming\Python\Python314\projects\leah_si_lara")
+import os
+BASE = Path(os.getenv("BASE_DIR", r"C:\Users\bizoi\libriscribe-roman"))
+PROJ = Path(os.getenv("PROJ_DIR", r"C:\Users\bizoi\AppData\Roaming\Python\Python314\projects\leah_si_lara"))
 load_dotenv(BASE / ".env")
 
 PROMPT = """You are a canon continuity checker for the novel "The Glass Crown".

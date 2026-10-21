@@ -1,0 +1,8 @@
+{
+  "chapter": 1,
+  "writer": "human-author",
+  "reviewer": "ollama/qwen2.5:7b",
+  "pass": true,
+  "violations": [],
+  "at": "2026-10-13T13:34:47.154370+00:00"
+}
