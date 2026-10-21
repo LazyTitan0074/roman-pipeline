@@ -1,103 +1,201 @@
 # Novel Production Pipeline
 
+[![CI](https://github.com/LazyTitan0074/roman-pipeline/workflows/CI/badge.svg)](https://github.com/LazyTitan0074/roman-pipeline/actions)
+[![Python Version](https://img.shields.io/badge/python-3.11%2B-blue)](https://www.python.org/downloads/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Code Style: Ruff](https://img.shields.io/badge/code%20style-ruff-000000.svg)](https://github.com/astral-sh/ruff)
+[![Tests](https://img.shields.io/badge/tests-81%2F81%20pass-brightgreen)](https://github.com/LazyTitan0074/roman-pipeline/actions)
+[![Version](https://img.shields.io/badge/version-0.2.1-blue)](https://github.com/LazyTitan0074/roman-pipeline/releases)
+
+---
+
 A reusable, AI-driven pipeline for writing and verifying novels/novellas.
 Originally built for *The Glass Crown* (10-chapter dark political fantasy).
 
-> **Vibe coded.** This pipeline was assembled iteratively with an AI coding
-> assistant (Hermes Agent). Expect rough edges; treat it as a starting point,
-> not a polished framework.
+> **Vibe coded.** This pipeline was assembled iteratively with an AI coding assistant (Hermes Agent). Expect rough edges; treat it as a starting point, not a polished framework.
 
-## What it does
+---
 
-1. **Initial phase (LibriScribe, auto):** concept → outline → characters →
-   worldbuilding → scenes. Data lives in `projects/<name>/`.
-2. **Per-chapter production** (`capitol_runner.py <N>`):
-   - Sync canon → dynamic questions (injects `CANON.md` facts into the writer).
-   - Deletes any existing chapter (rejected chapters are **rewritten**, not patched).
-   - Writes + internally reviews the chapter (model from `expert-roman.yaml`,
-     with fallback chain).
-   - Canon check by a **different** model than the writer: compares the chapter
-     against every fact in `CANON.md`, returns `{pass, violations}`.
-   - Retries up to 4 times on failure; logs to `retry_log.jsonl`.
-3. **Post-production:** assemble manuscript → format → EPUB + cover → verify.
-4. **Final gate:** PASS verdict **and** human spot-check (reviewers miss ~50%).
+## 🎯 What It Does
 
-## Layout
+| Phase | Description |
+|-------|-------------|
+| **1. Initial** (LibriScribe, auto) | concept → outline → characters → worldbuilding → scenes |
+| **2. Per-chapter** (`roman-pipeline chapter <N>`) | Sync canon → write → canon check (different model) → retry up to 4× |
+| **3. Post-production** (`roman-pipeline build`) | Assemble → format → EPUB + cover → verify |
+| **4. Final gate** | PASS verdict **and** human spot-check (reviewers miss ~50%) |
 
-```
-roman-pipeline/
-├── scripts/        # production scripts (runner, canon check, build, verify, epub)
-├── templates/      # file templates (canon, beat sheet, voice, checklist, outline,
-│                   # characters, world, .env, LibriScribe config)
-└── README.md
-```
+### Key Principles
+- 🔄 **Rewrites, not patches** — rejected chapters are fully rewritten
+- 🚫 **Reviewer ≠ Writer** — different models catch different errors
+- ⚖️ **Canon violation = reject** — no smoothing, only declared facts count
+- 👁️ **Human spot-check mandatory** — reviewers miss ~50% of issues
 
-## Example output
+---
 
-See `example/` for a real `canon_verdict_ch1.json` produced by the pipeline
-and the resulting chapter excerpt.
-
-For a new project, fill in / provide:
-
-| File | Purpose |
-|---|---|
-| `templates/CANON.md` | Canonical facts: names, ages, parentage, events, numbers, chronological appearances. Format: `- C01: ...`. Only **declared** facts count. |
-| `templates/BEAT_SHEET.md` | Chapter structure: scenes in order + canon gates + intimacy level (structural only). |
-| `templates/VOICE.md` | Narration style + per-character voice (what they say / never say). |
-| `templates/CHAPTER_CHECKLIST.md` | Pre/post-write checklist (grep sweep). |
-| `templates/outline.md` | Book summary + chapter details. |
-| `templates/characters.json` | Characters (name, age, description, personality, background, motivations, relations, arc). |
-| `templates/world.json` | Worldbuilding (geography, culture, history, rules, magic, locations, orgs, economy, religion). |
-| `templates/expert-roman.yaml` | LibriScribe config (title, genre, language, chapters, model + fallback chain, workflow). |
-| `templates/editor.yml` | Editor template (voice rules, name guard, safety rules). |
-| `templates/.env.example` | API keys (OpenRouter, Google AI Studio, Mistral, Groq/Bedrock). Copy to `.env`. |
-
-## Quick start
+## 🚀 Quick Start
 
 ```bash
+# 1. Clone & install
 git clone https://github.com/LazyTitan0074/roman-pipeline.git
 cd roman-pipeline
-pip install -r requirements.txt
-cp templates/.env.example .env   # fill in your API keys
-# edit BASE_DIR / PROJ_DIR in scripts/capitol_runner.py (or set env vars)
-python scripts/capitol_runner.py 1
+pip install -e .
+
+# 2. Create a new project
+roman-pipeline init my_novel --title "My Novel" --genre Fantasy
+
+# 3. Configure
+cd my_novel
+cp .env.example .env
+# Edit .env with your API keys (at least one reviewer key required)
+# Fill in: CANON.md, BEAT_SHEET.md, VOICE.md, characters.json, world.json, outline.md
+
+# 4. Write chapters
+roman-pipeline chapter 1
+roman-pipeline chapter 2
+# ...
+
+# 5. Build final outputs
+roman-pipeline build    # manuscript + format + EPUB + cover
+roman-pipeline verify   # all verification checks
 ```
 
-## Main scripts
+---
 
-- `scripts/capitol_runner.py <N>` — run production of one chapter (sync + write + check + retry).
-- `scripts/canon_check.py <N> [writer_model]` — verify a chapter against `CANON.md`.
-- `scripts/build_manuscript.py`, `scripts/format_oficial.py` — assemble + format.
-- `scripts/build_all.py`, `scripts/build_final.py`, `scripts/assemble_repo.py` — aggregate builds.
-- `scripts/sync_all.py`, `scripts/sync_chars.py` — syncs.
-- `scripts/verify_build.py`, `scripts/verify_struct.py`, `scripts/verify_epub.py`, `scripts/verify_review.py` — verifications.
-- `scripts/make_epub.py`, `scripts/make_cover.py` — EPUB + cover.
+## 🎨 Unified CLI
 
-## Configuration
+```bash
+roman-pipeline config              # Show current configuration
+roman-pipeline init my_novel --title "My Novel" --genre Fantasy
+roman-pipeline chapter 1           # Write chapter 1 with auto-retry
+roman-pipeline chapter 1 --max-attempts 6
+roman-pipeline check 1             # Canon check only
+roman-pipeline build               # All: manuscript, format, EPUB, cover
+roman-pipeline sync                # Sync scenes/outline/world → LibriScribe
+roman-pipeline verify              # All checks (struct, build, epub, review)
+roman-pipeline logs --chapter 1    # View retry/canon logs
+```
 
-Scripts have hardcoded paths (`BASE` / `PROJ`). For a new project, edit in
-`capitol_runner.py` and `canon_check.py`:
+---
 
-- `BASE` = working folder (where `CANON.md`, scripts, logs live).
-- `PROJ` = LibriScribe project folder (`projects/<name>/`).
+## ⚙️ Configuration (`.env`)
 
-## Non-negotiable rules (learned the hard way)
+```bash
+# Required paths
+BASE_DIR=./workspace                    # Working folder (CANON.md, logs, scripts)
+PROJ_DIR=./projects/my_novel            # LibriScribe project folder
+PROJECT_NAME=my_novel
+NUM_CHAPTERS=10
 
-- Reviewer **must differ** from writer (otherwise it misses the same mistakes).
-- Rejected chapters are **rewritten**, not patched.
-- Canon violation = reject, no smoothing.
-- Only **declared** facts count (names/ages/parentage/events/numbers/appearances).
-  Behavior, voice, or implied maturity is **never** a violation.
-- Name guard: never reuse canonical names for secondary/minor characters.
-- Final human spot-check is mandatory (reviewers miss ~50%).
+# Reviewer API keys (at least ONE required)
+GOOGLE_AI_STUDIO_API_KEY=
+GROQ_API_KEY=
+MISTRAL_API_KEY=
+OPENROUTER_API_KEY=
 
-## Notes
+# Writer model (LibriScribe) — recommended: Nemotron 3 Ultra FREE (1M context)
+WRITER_PROVIDER=openrouter
+WRITER_MODEL=nvidia/nemotron-3-ultra-550b-a55b:free
+WRITER_FALLBACK_CHAIN=google_ai_studio/gemini-2.5-flash, mistral/ministral-8b-latest, mistral/ministral-3b-latest
 
-- Free models have quotas (OpenRouter ~50/day, Gemini ~20/day). Ministral and
-  Groq were widely open. Check quotas before running.
-- Recommended production language: English (free models write clean English).
-  Translate to Romanian at the end with Gemini.
+# Reviewer model (CanonChecker) — must differ from writer!
+REVIEWER_PRIMARY=gemini-2.5-flash-lite
+REVIEWER_FALLBACK_CHAIN=ollama/qwen2.5:7b,groq/gpt-oss-120b,mistral/ministral-8b-latest
 
-## License
+MAX_ATTEMPTS=4
+```
+
+### 🏆 Recommended Free Writer Model
+| Model | Context | Cost | Notes |
+|-------|---------|------|-------|
+| **Nemotron 3 Ultra FREE** | **1M** | **FREE** | Best overall: 1M context, tool use, reasoning |
+| Nemotron 3 Super FREE | ~256K | FREE | Good fallback |
+| MiniMax M3 FREE | 1M | FREE | Multimodal, check availability |
+
+---
+
+## 📁 Project Templates (fill these in)
+
+| File | Purpose |
+|------|---------|
+| `CANON.md` | Canonical facts: names, ages, parentage, events, numbers, appearances. Format: `- C01: LABEL — Description`. Only **declared** facts count. |
+| `BEAT_SHEET.md` | Chapter structure: scenes in order + canon gates + intimacy level. |
+| `VOICE.md` | Narration style + per-character voice (what they say / never say). |
+| `CHAPTER_CHECKLIST.md` | Pre/post-write checklist (grep sweep). |
+| `outline.md` | Book summary + chapter details. |
+| `characters.json` | Characters (name, age, description, personality, background, motivations, relations, arc). |
+| `world.json` | Worldbuilding (geography, culture, history, rules, magic, locations, orgs, economy, religion). |
+| `expert-roman.yaml` | LibriScribe config (title, genre, language, chapters, model + fallback chain, workflow). |
+| `editor.yml` | Editor template (voice rules, name guard, safety rules). |
+| `.env` | API keys and runtime config. |
+
+---
+
+## 🔴 Non-Negotiable Rules (learned the hard way)
+
+1. **Reviewer ≠ Writer** — otherwise it misses the same mistakes
+2. **Rejected chapters are rewritten**, not patched
+3. **Canon violation = reject**, no smoothing
+4. Only **declared** facts count (names/ages/parentage/events/numbers/appearances). Behavior, voice, or implied maturity is **never** a violation.
+5. **Name guard**: never reuse canonical names for secondary/minor characters
+6. **Final human spot-check is mandatory** (reviewers miss ~50%)
+
+---
+
+## 🧪 Testing
+
+```bash
+# All tests (81 passing)
+pytest tests/ -v
+
+# With coverage
+pytest tests/ -v --cov=scripts --cov-report=term-missing
+
+# Linting
+ruff check scripts/ tests/
+ruff format scripts/ tests/
+
+# Quick test
+make test
+```
+
+---
+
+## 🔧 Makefile Shortcuts
+
+```bash
+make test          # Run all tests
+make lint          # Ruff lint
+make format        # Auto-format
+make check         # Lint + test
+make build         # Build wheel/sdist
+make clean         # Clean build artifacts
+make dev-setup     # Full dev setup (install + pre-commit)
+make demo          # Create demo project
+```
+
+---
+
+## 🐛 Troubleshooting
+
+| Issue | Solution |
+|-------|----------|
+| `PROJ_DIR does not exist` | `mkdir -p projects/<name> && mkdir workspace` |
+| `No reviewer API keys` | Set at least one: `GOOGLE_AI_STUDIO_API_KEY`, `GROQ_API_KEY`, `MISTRAL_API_KEY`, `OPENROUTER_API_KEY` |
+| `UnicodeDecodeError` on `.env` | Re-save `.env` as UTF-8: `echo "KEY=val" > .env` |
+| `SettingsError: writer_fallback_chain` | Use JSON array or comma-separated in `.env` |
+| `ch7 discipline contradiction` | Align `outline.md` and `BEAT_SHEET.md` (see `CANON.md C13`) |
+
+---
+
+## 📜 License
 
 MIT. Vibe coded — use at your own risk.
+
+---
+
+## 🙏 Acknowledgments
+
+- Built with [LibriScribe](https://github.com/LazyTitan0074/LibriScribe) + [Hermes CLI](https://github.com/nesquena/hermes-webui)
+- Models: Nemotron (NVIDIA), Gemini (Google), Ministral (Mistral), Groq, Ollama
+- Inspired by the writing workflow for *The Glass Crown*
